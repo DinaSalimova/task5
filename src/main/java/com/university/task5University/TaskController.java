@@ -12,18 +12,18 @@ import java.net.InetAddress;
 @RequestMapping(value = "/")
 public class TaskController {
     @Autowired
-    Service service;
+    ServiceCounter serviceCounter;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
     public int getCount() {
-        return service.count;
+        return serviceCounter.getCount();
     }
 
     @RequestMapping(value = "/stat", method = RequestMethod.GET)
     @ResponseBody
-    public int getStat() {
-        return service.count++;
+    public String getStat() {
+        return serviceCounter.saveUserInfo();//.count++;
     }
 
     @RequestMapping(value = "/about", method = RequestMethod.GET)
