@@ -4,14 +4,19 @@ services:
     image: 'task'
     ports:
       - "8080:8080"
-    depends_on:
-      PostgreSQL:
-        condition: service_healthy
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=p
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    deploy:
+      mode: replicated
+      replicas: 4
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 5
+        window: 120s
 
   PostgreSQL:
     image: postgres
